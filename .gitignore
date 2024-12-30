@@ -220,7 +220,6 @@ Pipfile
 Pipfile.lock
 poetry.lock
 pyproject.toml
-requirements.txt
 
 # Sphinx documentation
 docs/_build/
