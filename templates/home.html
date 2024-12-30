@@ -1,46 +1,27 @@
-{% from 'bootstrap5/form.html' import render_form %}
 
+<!--<div class="container my-5">-->
+<!--    <h1 class="text-center mb-4">Billify</h1>-->
+<!--    <div class="card shadow-sm p-4">-->
+<!--        <form id="date-form" class="needs-validation" novalidate>-->
+
+<!--        </form>-->
+<!--    </div>-->
+<!--    <div id="link-container" class="text-center mt-4"></div>-->
+<!--</div>-->
+
+
+
+{% from 'bootstrap5/form.html' import render_form %}
 {% include "header.html" %}
-<div>
-    <h1>Billify</h1>
-    <div>
-        <form id="date-form">
+
+<div class="container my-5">
+    <h1 class="text-center mb-4">Welcome to Billify</h1>
+    <div class="card form-container shadow-lg p-4 rounded-3">
+        <form id="date-form" class="needs-validation" novalidate>
             {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
         </form>
     </div>
-    <div id="link-container"></div>
+    <div id="link-container" class="text-center mt-4"></div>
 </div>
 
-    <script>
-        $(document).ready(function () {
-            $('#date-form').on('submit', function (e) {
-                e.preventDefault(); // Prevent the default form submission
-
-                // Add loading state to the submit button
-                const submitButton = $(this).find('button[type="submit"]');
-                submitButton.addClass('loading').text('Loading...');
-
-                // Serialize form data and make AJAX request
-                const formData = $(this).serialize();
-                $.ajax({
-                    url: '/',
-                    type: 'POST',
-                    data: formData,
-                    success: function (response) {
-                        // Update the link container with the response
-                        $('#link-container').html(response.link ?
-                            `<a href="${response.link}">Click Here</a>` : '');
-
-                        // Reset the button to its original state
-                        submitButton.removeClass('loading').text('Submit');
-                    },
-                    error: function () {
-                        alert('An error occurred. Please try again.');
-                        submitButton.removeClass('loading').text('Submit');
-                    }
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+{% include "footer.html" %}

@@ -1,11 +1,11 @@
 from flask import Flask, render_template, url_for, redirect, flash, jsonify, session, abort, send_from_directory
 from flask_bootstrap import Bootstrap5
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from werkzeug.security import generate_password_hash, check_password_hash
-from random import randint
-from functools import wraps
-from libgravatar import Gravatar
+# from flask_sqlalchemy import SQLAlchemy
+# from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+# from werkzeug.security import generate_password_hash, check_password_hash
+# from random import randint
+# from functools import wraps
+# from libgravatar import Gravatar
 from forms import *
 from data import Billify
 from mail import Mail
@@ -34,5 +34,21 @@ def home():
     return render_template('home.html', form=form, link="")
 
 
+@app.route("/contact", methods=["POST", "GET"])
+def contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        data = form.data
+        Mail(data)
+        return redirect(url_for('contact'))
+    return render_template("contact.html", form=form)
+
+
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=5001)
+    # app.run(host='0.0.0.0', port=5000)

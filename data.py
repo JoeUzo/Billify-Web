@@ -15,6 +15,9 @@ class Billify:
 
     def __init__(self):
         self.billboard = f"https://www.billboard.com/charts/hot-100"
+        self.headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
+        }
         self.replace_words = [" & ", " Featuring ", " With ", " And ", " x ", "X", " Or ", " + ", " by ", ", ", "  "]
         self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id_,
                                                             client_secret=client_secret_,
@@ -35,7 +38,7 @@ class Billify:
         print("Please Wait......")
         year = str(year)
         url = f"{self.billboard}/{year}/"
-        response = requests.get(url)
+        response = requests.get(url, headers=self.headers)
         billboard_website = response.text
         soup = BeautifulSoup(billboard_website, "html.parser")
         chart = soup.find_all(name="h3", class_="a-no-trucate")

@@ -1,4 +1,145 @@
-.loading {
-    pointer-events: none;
-    opacity: 0.6;
+/* General Body Styling */
+html, body {
+    height: 100%; /* Ensure full height for sticky footer */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Custom Navbar Styling */
+.abc {
+    background-color: #28a745 !important; /* Navbar background color */
+    color: #ffffff !important; /* Navbar text color */
+    padding: 0rem 1rem; /* Adjust padding for height */
+    align-items: center; /* Vertically center content */
+}
+
+
+
+
+/* Navbar Brand Styling */
+.abc .navbar-brand {
+    font-weight: bold;
+    font-size: 1.2rem; /* Balanced font size for the brand */
+    color: #ffffff !important; /* Ensure the brand text is visible */
+}
+
+/* Navbar Link Styling */
+.abc .nav-link {
+    font-size: 1rem; /* Slightly smaller for balance */
+    color: #ffffff !important; /* Navbar link color */
+    padding: 0.3rem 0.7rem; /* Padding for links */
+}
+
+.abc .nav-link:hover {
+    color: #ffcc00 !important; /* Optional hover effect for links */
+}
+
+.abc .nav-link.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+
+
+
+/* Footer Styling */
+.custom-footer {
+    background-color: #28a745; /* Success Green */
+    color: #ffffff; /* White text for contrast */
+    font-size: 1rem; /* Larger font size for readability */
+    text-align: center;
+    padding: 1px 0; /* Increased padding for better height */
+    margin-top: auto; /* Sticky footer */
+    line-height: 1; /* Comfortable line height */
+    height: auto; /* Let padding and content define the height */
+}
+
+}
+
+/* Home and Contact Page Specific Styling */
+.card {
+    background: #ffffff;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #343a40; /* Dark Gray */
+    font-weight: bold;
+    font-size: 1.5rem; /* Adjust font size */
+}
+
+form button[type="submit"] {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+form button[type="submit"]:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+#link-container a {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#link-container a:hover {
+    text-decoration: underline;
+}
+
+/* Utility Classes */
+.container {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+
+/* Loading text styling */
+.loading-text {
+    font-size: 1.2rem;
+    color: #28a745; /* Bootstrap success green */
+    font-weight: bold;
+    animation: blink 1s linear infinite;
+}
+
+/* Blink animation for the loading text */
+@keyframes blink {
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Error message styling */
+.text-danger {
+    color: #dc3545; /* Bootstrap danger red */
+    font-size: 1.1rem;
+}
+
+
+
+/* Form Container Styling */
+.form-container {
+    max-width: 500px; /* Restrict the width */
+    margin: 0 auto; /* Center align */
+    padding: 2rem; /* Add padding to increase height */
+    background: #ffffff; /* Ensure white background for form card */
+    border-radius: 10px; /* Smooth corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }

@@ -1,0 +1,24 @@
+{% include "header.html" %}
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4 rounded-3">
+                <h1 class="text-center mb-4">About Billify</h1>
+                <p>
+                    <strong>Billify</strong> is a unique tool designed for music enthusiasts who want to relive the top hits from the past. Our platform scrapes the
+                    <a href="https://www.billboard.com/charts/hot-100/" target="_blank">Billboard Top 100</a> songs from any week in history and creates a custom Spotify playlist for you.
+                    Whether you're feeling nostalgic or just exploring classic tracks, Billify helps you bring those songs back to life.
+                </p>
+                <p>
+                    Simply select a date, and Billify will do the rest, delivering a Spotify playlist filled with the top tracks from that week. Experience the magic of discovering or rediscovering your favorite music with ease!
+                </p>
+                <p class="text-center mt-4">
+                    <a href="{{ url_for('home') }}" class="btn btn-success">Get Started</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include "footer.html" %}
