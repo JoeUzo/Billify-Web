@@ -1,16 +1,12 @@
-from flask import Flask, render_template, url_for, redirect, flash, jsonify, session, abort, send_from_directory
+from flask import Flask, render_template, url_for, redirect, request, flash, jsonify, session, abort, send_from_directory
 from flask_bootstrap import Bootstrap5
-# from flask_sqlalchemy import SQLAlchemy
-# from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-# from werkzeug.security import generate_password_hash, check_password_hash
-# from random import randint
-# from functools import wraps
-# from libgravatar import Gravatar
 from forms import *
 from data import Billify
 from mail import Mail
+from spotify_auth import SpotAuth
 from dotenv import load_dotenv
 import os
+
 
 load_dotenv()
 
@@ -18,20 +14,61 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
 Bootstrap5(app)
-
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-# db = SQLAlchemy(app)
+spot_auth = SpotAuth()
 
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
+    """
+    1. If the user is not logged in (no token in session),
+       redirect them to /login to start OAuth flow.
+    2. Otherwise, use the stored token to call the Spotify API.
+    """
+    if "token_info" not in session:
+        return redirect("/login")
+
+    # We have a token—check if it's expired
+    token_info = session["token_info"]
+    if spot_auth.sp_oauth.is_token_expired(token_info):
+        session["token_info"] = spot_auth.expired(token_info)
+
+    # Initialize a Spotify client with the (valid) token
+    sp = spot_auth.init_token(token_info)
+
     form = DateForm()
     if form.validate_on_submit():
         date_ = form.date.data
-        link = Billify().start_to_finish(date_)
+        link = Billify(sp).start_to_finish(date_)
         return jsonify({'link': link})  # Return the link as JSON
     return render_template('home.html', form=form, link="")
+
+
+@app.route("/login")
+def login():
+    """
+    1. Get the Spotify auth URL from sp_oauth.
+    2. Redirect user to Spotify's authorization page.
+    """
+    auth_url = spot_auth.auth_url
+    return redirect(auth_url)
+
+
+@app.route("/callback", methods=["GET", "POST"])
+def callback():
+    """
+    1. Handle the redirect back from Spotify: retrieve the 'code' parameter.
+    2. Exchange it for an access token and store in session.
+    3. Redirect to home page.
+    """
+    code = request.args.get("code")
+    if code:
+        token_info = spot_auth.get_token(code)
+        session["token_info"] = token_info
+    else:
+        # If no code, user likely didn't authorize
+        return "Authorization failed.", 400
+
+    return redirect("/")
 
 
 @app.route("/contact", methods=["POST", "GET"])
@@ -50,5 +87,4 @@ def about():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
-    # app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000)

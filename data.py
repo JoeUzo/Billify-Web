@@ -3,7 +3,7 @@ import requests
 import os
 from dotenv import load_dotenv
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
+from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
 
 load_dotenv()
 client_id_ = os.getenv("SPOTIFY_CLIENT_ID")
@@ -13,19 +13,15 @@ redirect_url_ = os.getenv("SPOTIPY_REDIRECT_URI")
 
 class Billify:
 
-    def __init__(self):
+    def __init__(self, sp):
         self.billboard = f"https://www.billboard.com/charts/hot-100"
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36"
         }
         self.replace_words = [" & ", " Featuring ", " With ", " And ", " x ", "X", " Or ", " + ", " by ", ", ", "  "]
-        self.sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id_,
-                                                            client_secret=client_secret_,
-                                                            #redirect_uri="https://example.org/callback",
-                                                            redirect_uri=redirect_url_,
-                                                            cache_path=".cache",
-                                                            scope="playlist-modify-private"
-                                                            ))
+
+        self.sp = sp
+
         self.user = self.sp.current_user()
         self.user_id = self.user["id"]
         self.user_name = self.user["display_name"]
