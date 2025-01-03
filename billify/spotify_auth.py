@@ -14,12 +14,12 @@ class SpotAuth:
 
     def __init__(self):
         self.sp_oauth = SpotifyOAuth(client_id=client_id_,
-                                client_secret=client_secret_,
-                                redirect_uri=redirect_url_,
-                                cache_path=".cache",
-                                scope="playlist-modify-private",
-                                open_browser=False,
-                                )
+                                     client_secret=client_secret_,
+                                     redirect_uri=redirect_url_,
+                                     cache_path=".cache",
+                                     scope="playlist-modify-private",
+                                     open_browser=False,
+                                     )
         self.initialized = []
         self.auth_url = self.sp_oauth.get_authorize_url()
 

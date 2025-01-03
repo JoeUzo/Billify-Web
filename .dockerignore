@@ -1,38 +1,36 @@
-# Exclude Python cache and temporary files
+#  Python / Bytecode
+__pycache__/
 *.pyc
 *.pyo
-__pycache__/
-*.log
-.cache
+*.pyd
+*.py.class
 
-# Exclude IDE/editor-specific files
-.vscode/
-.idea/
-*.swp
-
-# Exclude environment files
-.env
-*.env
-
-# Exclude virtual environments
+#  Virtual Environments
+.venv/
 venv/
 env/
 
-# Exclude node_modules (if applicable)
-node_modules/
+#  Environment / Secrets
+.env
+*.env
 
-# Exclude static and media build artifacts
-staticfiles/
-media/
+#  Spotipy / Other Library Caches
+.cache/
+.cache-*
+.cache
 
-# Exclude Docker-related files
-Dockerfile*
-docker-compose.yml
-*.dockerignore
+#  Log Files
+*.log
 
-# Exclude git-related files
-.git/
+#  OS / Editor Files
+.DS_Store
+Thumbs.db
+.idea/
+
+#  Git
+.git
 .gitignore
 
-# Exclude my testing files
+#  Tests
+tests/
 test*.py

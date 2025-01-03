@@ -29,6 +29,7 @@ env/
 
 #  Cache / Logs
 .cache/
+.cache
 *.log
 
 #  Coverage / Testing

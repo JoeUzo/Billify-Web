@@ -1,14 +1,5 @@
 from bs4 import BeautifulSoup
 import requests
-import os
-from dotenv import load_dotenv
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth, SpotifyClientCredentials
-
-load_dotenv()
-client_id_ = os.getenv("SPOTIFY_CLIENT_ID")
-client_secret_ = os.getenv("SPOTIFY_CLIENT_SECRET")
-redirect_url_ = os.getenv("SPOTIPY_REDIRECT_URI")
 
 
 class Billify:
@@ -77,7 +68,7 @@ class Billify:
         new_playlist_link = new_playlist["external_urls"]["spotify"]
         return [new_playlist_id, new_playlist_link]
 
-    def add_songs_to_new_playist(self, id_no):
+    def add_songs_to_new_playlist(self, id_no):
         if len(self.playlist_songs) > 0:
             self.sp.playlist_add_items(
                 playlist_id=id_no,
@@ -88,6 +79,6 @@ class Billify:
         self.get_chart(year)
         self.get_songs()
         play_id = self.create_new_playlist(year)
-        self.add_songs_to_new_playist(play_id[0])
+        self.add_songs_to_new_playlist(play_id[0])
         print(play_id[1])
         return play_id[1]

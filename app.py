@@ -1,20 +1,16 @@
-from flask import Flask, render_template, url_for, redirect, request, flash, jsonify, session, abort, send_from_directory
+from flask import render_template, url_for, redirect, request, jsonify, session
 from flask_bootstrap import Bootstrap5
-from forms import *
-from data import Billify
-from mail import Mail
-from spotify_auth import SpotAuth
-from dotenv import load_dotenv
-import os
 
+from billify import app
 
-load_dotenv()
+from billify.forms import *
+from billify.data import Billify
+from billify.mail import Mail
+from billify.spotify_auth import SpotAuth
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
-
-Bootstrap5(app)
+# Create your SpotAuth instance and init Bootstrap
 spot_auth = SpotAuth()
+Bootstrap5(app)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -40,6 +36,7 @@ def home():
         date_ = form.date.data
         link = Billify(sp).start_to_finish(date_)
         return jsonify({'link': link})  # Return the link as JSON
+
     return render_template('home.html', form=form, link="")
 
 
@@ -86,5 +83,6 @@ def about():
     return render_template("about.html")
 
 
+# The entry point remains at the bottom, as usual
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
