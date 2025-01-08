@@ -34,3 +34,6 @@ Thumbs.db
 #  Tests
 tests/
 test*.py
+
+# Ignore Github Actions
+.github/
