@@ -17,7 +17,7 @@ jobs:
       run: |
         docker build . \
           --file Dockerfile \
-          --tag joeuzo/billify:test-${{ github.sha }}
+          --tag joeuzo/billify:test-$(echo ${{ github.sha }} | cut -c1-7)
           
   push:
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
@@ -31,7 +31,7 @@ jobs:
         docker build . \
           --file Dockerfile \
           --tag joeuzo/billify:latest \
-          --tag joeuzo/billify:${{ github.sha }}
+          --tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
 
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login --username "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -39,4 +39,4 @@ jobs:
     - name: Push Docker Image
       run: |
         docker push joeuzo/billify:latest
-        docker push joeuzo/billify:${{ github.sha }}
+        docker push joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
