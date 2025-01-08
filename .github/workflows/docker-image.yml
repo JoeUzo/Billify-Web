@@ -20,7 +20,7 @@ jobs:
           --tag joeuzo/billify:test-$(echo ${{ github.sha }} | cut -c1-7)
           
   push:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push'  # && github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
 
     steps:
