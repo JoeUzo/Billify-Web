@@ -13,10 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     # runs-on: ${{matrix.os}}
     # strategy:
-      # matrix:
-        # os: [ubuntu-latest, windows-latest]
+    #   matrix:
+    #     os: [ubuntu-latest, windows-latest]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)  # --platform linux/amd64
+    # - uses: actions/checkout@v4
+    # - name: Build the Docker image
+    #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)  # --platform linux/amd64
+
+    - name: Build and push Docker Image
+      uses: mr-smithers-excellent/docker-build-push@v6
+      with:
+        image: joeuzo/maven-web-app
+        registry: docker.io
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
