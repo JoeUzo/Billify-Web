@@ -13,7 +13,12 @@ spot_auth = SpotAuth()
 Bootstrap5(app)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
+def landing():
+    return redirect("/about")
+
+
+@app.route('/home', methods=['GET', 'POST'])
 def home():
     """
     1. If the user is not logged in (no token in session),
@@ -65,7 +70,7 @@ def callback():
         # If no code, user likely didn't authorize
         return "Authorization failed.", 400
 
-    return redirect("/")
+    return redirect("/home")
 
 
 @app.route("/contact", methods=["POST", "GET"])

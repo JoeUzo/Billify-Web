@@ -10,7 +10,7 @@ $(function () {
         // Serialize form data and make AJAX requests
         const formData = $(this).serialize();
         $.ajax({
-            url: '/', // Replace with your server endpoint
+            url: '/home',
             type: 'POST',
             data: formData,
             success: function (response) {
