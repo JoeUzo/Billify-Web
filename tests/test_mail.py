@@ -4,6 +4,7 @@ import smtplib
 from unittest.mock import patch, MagicMock
 from billify.mail import Mail
 
+
 def test_mail_env_missing(monkeypatch):
     """
     If EMAIL or EMAIL_KEY is not set, Mail should raise ValueError.
@@ -21,6 +22,7 @@ def test_mail_env_missing(monkeypatch):
 
     with pytest.raises(ValueError, match="EMAIL or EMAIL_KEY is not set"):
         Mail(data)
+
 
 @patch("smtplib.SMTP", autospec=True)
 def test_mail_sends_successfully(mock_smtp, monkeypatch):
