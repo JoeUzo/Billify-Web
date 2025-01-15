@@ -17,7 +17,7 @@ jobs:
       run: |
         docker build . \
           --file Dockerfile \
-          --tag joeuzo/billify:${{ github.sha:0:7 }}
+          --tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
           
   push:
     needs: build
@@ -30,7 +30,7 @@ jobs:
 
     - name: Tag Docker Image
       run: |
-        docker tag joeuzo/billify:${{ github.sha:0:7 }} joeuzo/billify:latest
+        docker tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7) joeuzo/billify:latest
           
 
     - name: Log in to Docker Hub
@@ -38,6 +38,6 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker push joeuzo/billify:${{ github.sha:0:7 }}
+        docker push joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
         docker push joeuzo/billify:latest
         
