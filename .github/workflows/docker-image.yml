@@ -17,20 +17,21 @@ jobs:
       run: |
         docker build . \
           --file Dockerfile \
-          --tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
-          
-  push:
-    needs: build
+          --tag joeuzo/questionnaire:test-$(echo ${{ github.sha }} | cut -c1-7)
 
+  push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Tag Docker Image
+    - name: Build Docker Image
       run: |
-        docker tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7) joeuzo/billify:latest
+        docker build . \
+          --file Dockerfile \
+          --tag joeuzo/questionnaire:$(echo ${{ github.sha }} | cut -c1-7) \
+          --tag joeuzo/questionnaire:latest
           
 
     - name: Log in to Docker Hub
@@ -38,6 +39,6 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker push joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
-        docker push joeuzo/billify:latest
+        docker push joeuzo/questionnaire:$(echo ${{ github.sha }} | cut -c1-7)
+        docker push joeuzo/questionnaire:latest
         
