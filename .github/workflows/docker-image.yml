@@ -17,21 +17,20 @@ jobs:
       run: |
         docker build . \
           --file Dockerfile \
-          --tag joeuzo/billify:test-$(echo ${{ github.sha }} | cut -c1-7)
+          --tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
           
   push:
-    if: github.event_name == 'push'  # && github.ref == 'refs/heads/master'
+    needs: build
+
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
 
-    - name: Build Docker Image
+    - name: Tag Docker Image
       run: |
-        docker build . \
-          --file Dockerfile \
-          --tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7) \
-          --tag joeuzo/billify:latest
+        docker tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7) joeuzo/billify:latest
           
 
     - name: Log in to Docker Hub
