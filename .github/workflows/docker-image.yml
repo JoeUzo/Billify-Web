@@ -20,6 +20,8 @@ jobs:
           --tag joeuzo/billify:${{ github.sha:0:7 }}
           
   push:
+    needs: build
+
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
