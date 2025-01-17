@@ -17,7 +17,7 @@ jobs:
       run: |
         docker build . \
           --file Dockerfile \
-          --tag joeuzo/questionnaire:test-$(echo ${{ github.sha }} | cut -c1-7)
+          --tag joeuzo/billify:test-$(echo ${{ github.sha }} | cut -c1-7)
 
   push:
     if: github.event_name == 'push'
@@ -30,8 +30,8 @@ jobs:
       run: |
         docker build . \
           --file Dockerfile \
-          --tag joeuzo/questionnaire:$(echo ${{ github.sha }} | cut -c1-7) \
-          --tag joeuzo/questionnaire:latest
+          --tag joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7) \
+          --tag joeuzo/billify:latest
           
 
     - name: Log in to Docker Hub
@@ -39,6 +39,6 @@ jobs:
 
     - name: Push Docker Image
       run: |
-        docker push joeuzo/questionnaire:$(echo ${{ github.sha }} | cut -c1-7)
-        docker push joeuzo/questionnaire:latest
+        docker push joeuzo/billify:$(echo ${{ github.sha }} | cut -c1-7)
+        docker push joeuzo/billify:latest
         
